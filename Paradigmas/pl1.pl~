@@ -1,0 +1,67 @@
+%Ejercicio 1
+padre(bisabuelo,antonio).
+padre(antonio,sergio).
+padre(antonio,nestor).
+padre(elpadreadriana,adriana).
+padre(nestor,milena).
+padre(antonio,lilian).
+padre(hector,adrian).
+padre(adrian,yamil).
+
+madre(estela,sergio).
+madre(estela,nestor).
+madre(aurora,adriana).
+madre(estela,lilian).
+madre(lilian,yamil).
+madre(elena,adrian).
+
+
+personaReal(X):- padre(_,X),madre(_,X).
+
+hijo(X,Y):-padre(Y,X);madre(Y,X).
+
+
+hermano_de(estela,aurora).
+hermano_de(X,Y):- padre(P,X),padre(P,Y); madre(M,X),madre(M,Y).
+hermano(X,Y):- hermano_de(Y,X).
+hermano(X,Y):- hermano_de(X,Y).
+
+primo(X,Y):- padre(P,X),hermano(P,H),padre(H,Y) ; madre(M,X),hermano(M,H),madre(H,Y).
+
+abuelo(X,Y):- hijo(M,X),hijo(Y,M).
+
+ancestro(X,X).
+ancestro(X,Y):- hijo(Y,P),ancestro(X,P).
+
+%Ejercicio 2
+suma(X,Y,Z ):- Z is X+Y.
+producto(X,Y,Z) :- Z is X*Y.
+factorial(0,1).
+factorial(X,Y) :- X>0, X2 is X-1, factorial(X2,Z), producto(X,Z,Y).
+
+
+%Ejercicio 3
+rango(I,F,N) :- N>=I, N=<F.
+%rango(4,7,6)
+% 6>=4, 6<=7
+% true, true
+% true
+
+%rango(4,7,9)
+% 9>=4, 9=<7
+% true, false
+% false
+%
+% rango(4,7,X)
+% X>=4,X=<7
+% X no instanciada
+% Error
+
+rangoList(I,F,[X]) :- I==F, X==I.
+rangoList(I,F,[X|XS]) :- I=X, I=<F, I2 is I+1, rangoList(I2,F,XS).
+
+%Ejercicio 4
+long([_],1).
+long([_|XS],L) :- L2 is L-1, long(XS,L2).
+
+
